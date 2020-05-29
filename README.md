@@ -16,8 +16,8 @@ Needs to set up an .env file with REACT_APP_PADLETID, REACT_APP_APIKEY and REACT
 The api rules are here: https://padlet.readme.io/docs/post-object
 
 As it says there, after you get an API key you can find your padlet id executing 
-<code>
-curl -XGET -H 'App-Id: 4705250fa45571490b6e3b55fcd8b08d3377d654c985d7af794b08005c35b892' -H "Content-type: application/json" 'https://padlet.com/api/0.9/public_padlets?username=deepan'</code>
+
+curl -XGET -H 'App-Id: 4705250fa45571490b6e3b55fcd8b08d3377d654c985d7af794b08005c35b892' -H "Content-type: application/json" 'https://padlet.com/api/0.9/public_padlets?username=deepan'
 
 on the command line, using your own API key and username.
 
