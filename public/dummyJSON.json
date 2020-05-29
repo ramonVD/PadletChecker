@@ -1,0 +1,90 @@
+{
+    "data": [
+         {
+            "id": 696969,
+            "subject": "Batman",
+            "body": "<p>Originally named \"the Bat-Man,\" the character is also referred to by such epithets as the \"Caped Crusader\", the \"Dark Knight\", and the \"World's Greatest Detective\".</p>",
+            "attachment": "https://upload.wikimedia.org/wikipedia/en/7/75/Comic_Art_-_Batman_by_Jim_Lee_%282002%29.png",
+            "created_at": "2015-12-03T06:01:19.876Z",
+            "updated_at": "2015-12-03T06:22:41.145Z",
+            "author_id": 71384074,
+            "attachment_type": "photo"
+        },
+        {
+            "id": 84620966,
+            "subject": "Batman",
+            "body": "<p>Originally named \"the Bat-Man,\" the character is also referred to by such epithets as the \"Caped Crusader\", the \"Dark Knight\", and the \"World's Greatest Detective\".</p>",
+            "attachment": "https://upload.wikimedia.org/wikipedia/en/7/75/Comic_Art_-_Batman_by_Jim_Lee_%282002%29.png",
+            "created_at": "2015-12-03T06:01:19.876Z",
+            "updated_at": "2015-12-03T06:22:41.145Z",
+            "author_id": 71384074,
+            "attachment_type": "photo"
+        },
+        {
+            "id": 84621115,
+            "subject": "Iron Man",
+            "body": "<p><b>Iron Man (Tony Stark) is a fictional superhero appearing in American comic books published byMarvel Comics, as well as its associated media. </b></p>",
+            "attachment": "https://upload.wikimedia.org/wikipedia/en/e/e0/Iron_Man_bleeding_edge.jpg",
+            "created_at": "2015-12-03T06:05:11.379Z",
+            "updated_at": "2015-12-03T06:20:12.454Z",
+            "author_id": 71384074,
+            "attachment_type": "photo"
+        },
+        {
+            "id": 84621089,
+            "subject": "Captain America",
+            "body": "<p>Captain America is a fictional superhero appearing in American comic books published byMarvel Comics. </p>",
+            "attachment": "https://upload.wikimedia.org/wikipedia/en/9/91/CaptainAmerica109.jpg",
+            "created_at": "2015-12-03T06:04:29.665Z",
+            "updated_at": "2015-12-03T06:20:35.765Z",
+            "author_id": 71384074,
+            "attachment_type": "photo"
+        },
+        {
+            "id": 84621054,
+            "subject": "Wonder Woman",
+            "body": "<p> Wonder Woman is a warrior princess of the Amazons(which are based on the Amazons of Greek mythology) and is known in her homeland as Princess Diana of Themyscira. </p>",
+            "attachment": "https://upload.wikimedia.org/wikipedia/en/8/8c/WonderWoman-Ross.png",
+            "created_at": "2015-12-03T06:03:53.022Z",
+            "updated_at": "2015-12-03T06:21:08.411Z",
+            "author_id": 71384074,
+            "attachment_type": "photo"
+        },
+        {
+            "id": 84621030,
+            "subject": "Thor",
+            "body": "<p>Thor, based on the Norse mythological deity of the same name, is the Asgardian god of thunder and possesses the enchanted hammer Mjolnir.</p>",
+            "attachment": "https://upload.wikimedia.org/wikipedia/en/4/41/Thor-272.jpg",
+            "created_at": "2015-12-03T06:03:06.545Z",
+            "updated_at": "2015-12-03T06:22:00.942Z",
+            "author_id": 71384074,
+            "attachment_type": "photo"
+        },
+        {
+            "id": 84620993,
+            "subject": "Spiderman",
+            "body": "<p>Spider-Man is a fictional superhero appearing in American comic books published by Marvel Comics existing in its shared universe.</p>",
+            "attachment": "https://upload.wikimedia.org/wikipedia/en/0/0c/Spiderman50.jpg",
+            "created_at": "2015-12-03T06:02:15.840Z",
+            "updated_at": "2015-12-03T06:22:17.790Z",
+            "author_id": 71384074,
+            "attachment_type": "photo"
+        },
+        {
+            "id": 84620772,
+            "subject": "Superman",
+            "body": "<p>Superman is widely considered an Americancultural icon and was created by writer Jerry Siegel and artist Joe Shuster in 1933; later, in 1938, the character was sold to Detective Comics, Inc. (later DC Comics).</p>",
+            "attachment": "https://upload.wikimedia.org/wikipedia/en/e/eb/SupermanRoss.png",
+            "created_at": "2015-12-03T05:56:22.539Z",
+            "updated_at": "2015-12-03T06:23:19.653Z",
+            "author_id": 71384074,
+            "attachment_type": "photo"
+        }
+    ],
+    "meta": {
+        "current_page": 1,
+        "total_pages": 1,
+        "total_entries": 7,
+        "per_page": 20
+    }
+}

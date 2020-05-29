@@ -1,68 +1,43 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Padlet Checker
 
-In the project directory, you can run:
+React Component that Checks for posts added or removed in a public padlet. If there is moderation, it won't see
+a post until it has been accepted by a moderator.
 
-### `npm start`
+It basically lets you make API calls to a Padlet of your choosing to get the existant post IDs. Then it stores
+those in a cookie. Afterwards it just keeps comparing the IDs in your cookies with those when you make the API
+call again.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+###Setting it up
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+Needs to set up an .env file with REACT_APP_PADLETID, REACT_APP_APIKEY and REACT_APP_PADLETURL.
 
-### `npm test`
+The api rules are here: https://padlet.readme.io/docs/post-object
+As it says there, after you get an API key you can find your padlet id executing 
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+curl -XGET -H 'App-Id: 4705250fa45571490b6e3b55fcd8b08d3377d654c985d7af794b08005c35b892' -H "Content-type: application/json" 'https://padlet.com/api/0.9/public_padlets?username=deepan'
 
-### `npm run build`
+on the command line, using your own API key and username.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+REACT_APP_PADLETURL is simply the url of your Padlet. There is an .env.example file.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+Also, there's a file in /public called dummyJSON which contains the data structure you'll get from the API.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+###Uses
 
-### `npm run eject`
+I made this to check on a personal padlet since, unless I'm mistaken, I only get notifications when the Padlet is open,
+and also sometimes it is difficult to know if there's a new post since it can be positioned anywhere on the wall.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+###Limitations
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Secret, private and passworded Padlets dont show the data to the API. Also, non approved posts (if you allow moderation on your Padlet) 
+also don't show up in the list of posts, which limits a lot the scope of this app. 
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Basically, it works okay only if you have a public, non moderated Padlet, which is a pretty narrow limitation.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+###In closing
 
-## Learn More
+Even if it doesn't have that many uses or isn't that well written, I still had fun making it and maybe somebody can use it, so I hope you like it.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
