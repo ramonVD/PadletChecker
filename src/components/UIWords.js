@@ -1,5 +1,5 @@
 
-export const possibleLanguages = ["EN", "CAT", "ESP"];
+export const possibleLanguages = ["EN", "ESP", "CAT"];
 
 const words = {			CAT: [ 	
 						"Comprovant els missatges del Padlet...", 
@@ -13,7 +13,13 @@ const words = {			CAT: [
 						"Comprova un altre cop els missatges del Padlet!",
 						"Hi ha nous missatges al meu ",
 						"Última comprovació: ",
-						"Llenguatge: "
+						"Llenguatge: ",
+						"Obre la llista de missatges",
+						"Llistat de missatges",
+						"Nou!",
+						"No s'ha pogut trobar cap missatge!",
+						"Torna a dalt",
+						"Tanca la llista de missatges"
 						],
 						ESP: [
 						"Comprobando los mensajes del Padlet...", 
@@ -27,7 +33,13 @@ const words = {			CAT: [
 						"Comprueba otra vez los mensajes del Padlet!",
 						"Hay nuevos mensajes en mi ",
 						"Última comprobación: ",
-						"Lenguaje: "
+						"Lenguaje: ",
+						"Abre la lista de mensajes",
+						"Listado de mensajes",
+						"Nuevo!",
+						"No se ha podido encontrar ningún mensaje",
+						"Vuelve arriba",
+						"Cierra la lista de mensajes"
 						],
 						EN: [
 						"Checking Padlets' messages...", 
@@ -41,7 +53,13 @@ const words = {			CAT: [
 						"Check Padlet's messages again!",
 						"Are there new messages in my ",
 						"Last check: ",
-						"Language: "
+						"Language: ",
+						"Open the message list",
+						"Message list",
+						"New!",
+						"Couldn't find any message",
+						"Go up",
+						"Close the message list"
 						]
 					};
 

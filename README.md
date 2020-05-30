@@ -9,17 +9,13 @@ It basically lets you make API calls to a Padlet of your choosing to get the exi
 those in a cookie. Afterwards it just keeps comparing and updating the IDs in your cookies with those when you 
 make the API call again, and tells you how many were added/removed.
 
+It also shows the message titles, dates and text that you got from the API.
+
 ### Setting it up
 
-Needs to set up an .env file with REACT_APP_PADLETID, REACT_APP_APIKEY and REACT_APP_PADLETURL.
+Needs to set up an .env file with REACT_APP_APIKEY and REACT_APP_PADLETURL.
 
 The api rules are here: https://padlet.readme.io/docs/post-object
-
-As it says there, after you get an API key you can find your padlet id executing 
-
-curl -XGET -H 'App-Id: 4705250fa45571490b6e3b55fcd8b08d3377d654c985d7af794b08005c35b892' -H "Content-type: application/json" 'https://padlet.com/api/0.9/public_padlets?username=deepan'
-
-on the command line, using your own API key and username.
 
 REACT_APP_PADLETURL is simply the url of your Padlet. There is an .env.example file.
 
@@ -30,7 +26,7 @@ Also, there's a file in /public called dummyJSON.json which contains an example 
 I made this to check on a personal padlet since, unless I'm mistaken, I only get notifications when that Padlets' page is open,
 and it is sometimes difficult to know if there's a new post or even where it is, since it can be positioned anywhere on the wall.
 
-The API also sends all the text, dates etc. of posts, so you could indicate titles of added or eliminated posts, etc. 
+The API also sends more data and you could do way more stuff than I do with the data you get, just check the json structure.
 
 ### Limitations
 

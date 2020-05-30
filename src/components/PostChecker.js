@@ -2,11 +2,10 @@ import React from 'react';
 import cookie from 'react-cookies';
 import LanguageButton from "./LanguageButton";
 import {possibleLanguages, getWord} from "./UIWords";
+import PadletPostsContainer from "./PadletPostsContainer";
 
 require('dotenv').config();
 
-//Minimum wait time between making API calls in milliseconds (basically how often can you press the button)
-const API_CALL_MINIMUM_WAIT_MS = 3000;
 /*Component that Checks for posts added or removed in a public padlet. If there is moderation, it won't see
 a post until it has been accepted by a moderator.*/
 /*It basically makes a call to Padlet's API to check the ids of the existent posts in your Padlet (and more, like 
@@ -16,6 +15,10 @@ It keeps telling you the difference when the amount of posts changes, just the a
 that were added or eliminated. Needs a padlet id and an API key to make the calls, which should be setup in 
 an .env file. Added support for language changing on the fly. The possible languages and words for every 
 language are in UIWords.js*/
+
+const API_CALL_MINIMUM_WAIT_MS = 3000;
+
+const cookiesPath = "/padletrest";
 
 class PostChecker extends React.Component {
   	constructor(props) {
@@ -30,6 +33,7 @@ class PostChecker extends React.Component {
 		     checkedIds: undefined,
 		      timeout: false,
 		      lastAmountChanged: [-2,0],
+		      postsData: [],
 		      error: false,
 		      language: startingLang
 		};	
@@ -38,7 +42,7 @@ class PostChecker extends React.Component {
 	}
 	
 	componentDidMount() {
-		//Checks for post updates in the padlet as the first thing ...
+		//Get the padlet data from the API first thing...
 		this.requestAndUpdatePosts();
 	}
 
@@ -75,19 +79,34 @@ class PostChecker extends React.Component {
 		const lastCheck = cookie.load("lastCheck");
 		const buttonText = (this.state.timeout) ? getWord(language,7) : getWord(language,8);
 		const clickMeClass = (this.state.timeout) ?  "" : " pressMeButton";
-
-		//change REACT_APP_PADLETURL in .env to send the user to the webpage of your padlet
+		const invisButton = (this.state.postsData.length === 0 ) ? " invisible" : "";
 		return(
-			<div className="container text-center">
-				<div className="row justify-content-end h-25">
-					<LanguageButton possibleLanguages={possibleLanguages} selectedLang={this.state.language} 
-					changeLanguage={this.changeLanguage} languageName={getWord(language,11)}/>
+			<div className="container-fluid">
+			<div className="container text-center" id="topContainer">
+				<div className="row justify-content-end align-items-center">
+						<LanguageButton possibleLanguages={possibleLanguages} selectedLang={this.state.language} 
+						changeLanguage={this.changeLanguage} languageName={getWord(language,11)}/>
 				</div>
-				<div className="row justify-content-center h-75">
+				<div className="row justify-content-center">
 					<div className="card mb-3 mainContainer">
 					  	<div className="card-header">
-					  		<h4 style={{paddingTop: "10px"}}>{getWord(language,9)}<a href={process.env.REACT_APP_PADLETURL} 
+					  		<h4 style={{paddingTop: "10px", paddingBottom: "5px"}}>{getWord(language,9)}<a href={process.env.REACT_APP_PADLETURL} 
 					  		rel="noopener noreferrer" target="_blank">Padlet?</a></h4>
+
+					  		<button className={"btn btn-success btn-sm" + invisButton} data-toggle="collapse" 
+							href="#collapsePosts" aria-expanded="false" aria-controls="collapsePosts" id="collapsePostsButton"
+							onClick={() => {setTimeout( () => {
+								var btn = document.getElementById("collapsePostsButton");
+								if (btn.innerText === getWord(language,12)) {
+									var elmnt = document.getElementById("collapsePosts");
+									elmnt.scrollIntoView();
+									btn.textContent = getWord(language,17);
+								} else {
+									btn.textContent = getWord(language,12)
+								}
+								},200); }}>
+								{getWord(language,12)}
+							</button>
 					 	</div>
 					  	<div className="card-body">
 					    	{msgsData}
@@ -101,7 +120,11 @@ class PostChecker extends React.Component {
 							</button>
 					  	</div>
 					</div>
-				</div>
+				</div>	
+			</div>
+					<PadletPostsContainer postsData={this.state.postsData} phrases={[getWord(language,13),getWord(language,14),
+								getWord(language,15), getWord(language,16)]} />
+
 			</div>);
 	}
 
@@ -110,12 +133,11 @@ class PostChecker extends React.Component {
 		if (this.state.timeout) { return; }
 		this.setState({timeout: true});
 
-		/*Using a proxy to avoid CORS problems, API isnt sending correct allow origin header or am I thick? tested a lot
-		of things, only this worked, if someone can shed some light on this I'd be grateful*/
+		/*Couldnt get this to work without a cors proxy (allow origin missing from head apparently), but I've seen
+		someone using py.requests and it working fine so maybe I'm doing something wrong*/
 		const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
 
-		//May need to change page number for differently styled padlets
-		const targetUrl = 'https://padlet.com/api/0.9/public_posts?padlet_id='+process.env.REACT_APP_PADLETID+'&page=1';
+		const targetUrl = 'https://padlet.com/api/0.9/public_posts?padlet_url='+process.env.REACT_APP_PADLETURL;
 
 		const timeBeforeCheck = Date.now();
 		fetch(proxyUrl+targetUrl, {
@@ -130,15 +152,22 @@ class PostChecker extends React.Component {
 	    	return res.json();})
 	    .then( (msgsData) => {
 	    	let newIdArray = [];
+	    	let titleBodyArray = [];
 	    	 for (let post of msgsData.data) {    
 	    	 	if (post.hasOwnProperty("id")) {
 		  			newIdArray.push(post.id);
+		  			//from https://stackoverflow.com/questions/822452/strip-html-from-text-javascript
+		  			const unformatBody = (post.body === undefined) ? "" : post["body"].replace(/<\/?("[^"]*"|'[^']*'|[^>])*(>|$)/g, "");
+		  			titleBodyArray.push({"id": post.id, 
+		  				"subject": post.subject, 
+		  				"body": unformatBody, 
+		  				"created_at": post.created_at});
 		  		}
 		  	}
 		  	const timeWhenCheck = Date.now();
 		  	const msDiff = timeWhenCheck - timeBeforeCheck;
 
-		  	//Effectively sets a minimum wait time of 3s... dont wanna let users spam the API with calls
+		  	//Effectively sets a minimum wait time... dont wanna let users spam the API with calls
 		  	const cooldownTimer = (msDiff < API_CALL_MINIMUM_WAIT_MS) ? (API_CALL_MINIMUM_WAIT_MS-msDiff) : 0;
 
 		  	this.cooldownTimer = setTimeout( () => { 
@@ -149,12 +178,12 @@ class PostChecker extends React.Component {
 				//If First time visitor of the site, save a cookie with the msg ids we got from padlet
 				if (lastSeenIds === undefined) {
 					lastMsgArray =[-1,0];
-					cookie.save("seenIds", newIdArray, {path: "/padletrest", expires: new Date(new Date().getTime() +1000*60*60*24*365), sameSite: true});
+					cookie.save("seenIds", newIdArray, {path: cookiesPath, expires: new Date(new Date().getTime() +1000*60*60*24*365), sameSite: true});
 				} else {
-					const diffArray = comparePostAmounts(lastSeenIds, newIdArray);
+					const diffArray = comparePostAmountsAndUpdateNewPosts(lastSeenIds, newIdArray, titleBodyArray);
 					//If there are differences between old and new msg ids, write them to user and overwrite the cookie with new ids
 					if (diffArray[0] !== 0 || diffArray[1] !== 0) { 
-					cookie.save("seenIds", newIdArray, {path: "/padletrest", expires: new Date(new Date().getTime() +1000*60*60*24*365), sameSite: true});
+					cookie.save("seenIds", newIdArray, {path: cookiesPath, expires: new Date(new Date().getTime() +1000*60*60*24*365), sameSite: true});
 					lastMsgArray = [diffArray[0], diffArray[1]];
 					} else {
 						//There are no differences with old data from padlet
@@ -163,10 +192,9 @@ class PostChecker extends React.Component {
 				}
 
 				//Update last time we checked with Padlet, could maybe save in the future for statistics of when users check? Iunno
-				cookie.save("lastCheck", new Date().getTime(), {path: "/padletrest",expires: new Date(new Date().getTime() +1000*60*60*24*365), sameSite: "strict"});
+				cookie.save("lastCheck", new Date().getTime(), {path: cookiesPath, expires: new Date(new Date().getTime() +1000*60*60*24*365), sameSite: "strict"});
 
-				//Update the state
-		  		this.setState({checkedIds: newIdArray, timeout: false, lastAmountChanged: lastMsgArray});
+		  		this.setState({checkedIds: newIdArray, timeout: false, lastAmountChanged: lastMsgArray, postsData: titleBodyArray});
 		  	}, cooldownTimer); 
 		  	
 	    }).catch(err => {
@@ -182,27 +210,42 @@ class PostChecker extends React.Component {
 	changeLanguage(e) {
 		const lang = e.target.value;
 		if (lang !== undefined && possibleLanguages.indexOf(lang !== -1)) {
-			cookie.save("lang", lang, {path: "/padletrest",expires: new Date(new Date().getTime() +1000*60*60*24*365), sameSite: "strict"});
+			cookie.save("lang", lang, {path: cookiesPath, expires: new Date(new Date().getTime() +1000*60*60*24*365), sameSite: "strict"});
 			this.setState({language: lang});
 		}
 	}
 }
 
 /*Compares Ids from the list of IDs the user has in his cookies vs the list of IDs we just got
-from posts in the padlet, returns an array with the variation [numberOfPostsAdded, numberOfPostsRemoved]*/
-function comparePostAmounts(idsBefore, idsAfter) {
+from posts in the padlet, returns an array with the variation [numberOfPostsAdded, numberOfPostsRemoved].
+At the risk of overcrowding the function, it also updates the postlist so new or eliminated posts can
+be shown with different colors or w/e. This is a hastily modified, terrible function*/
+function comparePostAmountsAndUpdateNewPosts(idsBefore, idsAfter, elementsToUpdate) {
 		let newPostsAdded = 0, oldPostsEliminated = 0;
 
-	    for (let newId of idsAfter) {
-	  		if (idsBefore.indexOf(newId) === -1) { newPostsAdded++; }
+	    for (let oldId of idsBefore) {
+	    	if (idsAfter.indexOf(oldId) === -1) { 
+	    		oldPostsEliminated++;
+	    	}
 	    }
 
-	    for (let oldId of idsBefore) {
-	    	if (idsAfter.indexOf(oldId) === -1) { oldPostsEliminated++;}
+	    for (let newId of idsAfter) {
+	  		if (idsBefore.indexOf(newId) === -1) { 
+	  			newPostsAdded++;
+	  			/*New posts get to go first in the array which translates to a first position
+	  			in the shown list*/
+	  			for (let i = 0; i < elementsToUpdate.length; i++) {
+	  				if (elementsToUpdate[i].id === newId) { 
+	  					elementsToUpdate[i].status = "new";
+	  					let tmpElement = elementsToUpdate[i];
+	  					elementsToUpdate.splice(i,1);
+	  					elementsToUpdate.unshift(tmpElement);
+	  				}
+	  			}
+	  		}
 	    }
 
 	  	return [newPostsAdded, oldPostsEliminated];
 }
-
 
 export default PostChecker;
