@@ -9,7 +9,7 @@
   font-size:0.9em;
 }
 .centralText {
-  padding-top: 5vh;
+  padding-top: 8vh;
   padding-bottom: 5vh;
   transition: transform 0.5s ease;
   cursor: pointer;
@@ -83,6 +83,8 @@
 
 .pressMeButton {
   animation-name: pressMeButtonRadiate;
+  margin-bottom:5px;
+  margin-top:0px;
   animation-duration: 1500ms;
   animation-delay: 3200ms;
   animation-fill-mode: forwards;
@@ -100,4 +102,8 @@
 
 .invisible {
   visibility: hidden;
+}
+
+.colListButton {
+  font-weight: 600 !important;
 }

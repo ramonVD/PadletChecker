@@ -58,17 +58,17 @@ class PostChecker extends React.Component {
 		let msgsData;
 		//Loading animation, havent gotten the data from padlet yet
 		if (checkedIds === undefined || this.state.timeout) {
-			msgsData = <h5 className="card-title centralText"><div className="loader">{getWord(language,0)}</div></h5>;
+			msgsData = <h4 className="card-title centralText"><div className="loader">{getWord(language,0)}</div></h4>;
 		} else {
 			if (lastAmountChanged[0] === -2) { //error
 			} else if (lastAmountChanged[0] <= -1) { //first time visiting site
-				msgsData = <h5 className="card-title centralText">{getWord(language,1)}</h5>;
+				msgsData = <h4 className="card-title centralText">{getWord(language,1)}</h4>;
 			} else if (lastAmountChanged[0] === 0 && lastAmountChanged[1] === 0) { //equal messages amount
-				msgsData = <h5 className="card-title centralText">{getWord(language,5)}</h5>;
+				msgsData = <h4 className="card-title centralText">{getWord(language,5)}</h4>;
 			} else { //difference in messages amount
-				msgsData= <h5 className="card-title centralText">
+				msgsData= <h4 className="card-title centralText">
 						<span className="text-danger">{getWord(language,2)}</span>
-						<span>{lastAmountChanged[0] + getWord(language,3) + lastAmountChanged[1] + getWord(language,4)}</span></h5>; 
+						<span>{lastAmountChanged[0] + getWord(language,3) + lastAmountChanged[1] + getWord(language,4)}</span></h4>; 
 
 			}
 		}
@@ -79,7 +79,14 @@ class PostChecker extends React.Component {
 		const lastCheck = cookie.load("lastCheck");
 		const buttonText = (this.state.timeout) ? getWord(language,7) : getWord(language,8);
 		const clickMeClass = (this.state.timeout) ?  "" : " pressMeButton";
-		const invisButton = (this.state.postsData.length === 0 ) ? " invisible" : "";
+		const invisButton = (this.state.postsData.length === 0 ) ? " " : "";
+		let colPostElement = document.getElementById("collapsePosts");
+		let colButtonText;
+		if (colPostElement === null || colPostElement === undefined) {
+			colButtonText = getWord(language,12);
+		} else {
+			colButtonText = (colPostElement.classList.contains("show")) ? getWord(language,17) : getWord(language,12);
+		}
 		return(
 			<div className="container-fluid">
 			<div className="container text-center" id="topContainer">
@@ -90,35 +97,34 @@ class PostChecker extends React.Component {
 				<div className="row justify-content-center">
 					<div className="card mb-3 mainContainer">
 					  	<div className="card-header">
-					  		<h4 style={{paddingTop: "10px", paddingBottom: "5px"}}>{getWord(language,9)}<a href={process.env.REACT_APP_PADLETURL} 
-					  		rel="noopener noreferrer" target="_blank">Padlet?</a></h4>
+					  		<h4 style={{paddingTop: "10px", paddingBottom: "5px"}}><b>{getWord(language,9)}<a href={process.env.REACT_APP_PADLETURL} 
+					  		rel="noopener noreferrer" target="_blank">Padlet?</a></b></h4>
 
-					  		<button className={"btn btn-success btn-sm" + invisButton} data-toggle="collapse" 
-							href="#collapsePosts" aria-expanded="false" aria-controls="collapsePosts" id="collapsePostsButton"
-							onClick={() => {setTimeout( () => {
-								var btn = document.getElementById("collapsePostsButton");
-								if (btn.innerText === getWord(language,12)) {
-									var elmnt = document.getElementById("collapsePosts");
-									elmnt.scrollIntoView();
-									btn.textContent = getWord(language,17);
-								} else {
-									btn.textContent = getWord(language,12)
-								}
-								},200); }}>
-								{getWord(language,12)}
-							</button>
 					 	</div>
 					  	<div className="card-body">
 					    	{msgsData}
 					  	</div>
 					  	{lastCheck !== undefined && !this.state.timeout && <p className="smallFont"><i>{getWord(language,10) +
 					  		new Date(parseInt(lastCheck)).toLocaleString()}</i></p>}
-					  	<div className="card-footer" style={{padding: "0"}}>
-					  		<button className={"btn btn-primary btn-lg btn-block"+clickMeClass} 
+					  	<div className="" style={{padding: "0"}}>
+					  		<button className={"btn btn-primary btn-lg btn-block" + clickMeClass} 
 						  		onClick={() => {this.requestAndUpdatePosts()}} 
 								disabled={this.state.timeout}><b>{buttonText}</b>
 							</button>
-					  	</div>
+					  		<button className={"btn btn-success btn-lg btn-block colListButton" + invisButton} data-toggle="collapse" 
+							href="#collapsePosts" aria-expanded="false" aria-controls="collapsePosts" id="collapsePostsButton"
+							onClick={() => {setTimeout( () => {
+								var btn = document.getElementById("collapsePostsButton");
+								if (btn.innerText === getWord(language,12)) {
+									colPostElement.scrollIntoView();
+									btn.textContent = getWord(language,17);
+								} else {
+									btn.textContent = getWord(language,12);
+								}
+								},200); }}>
+								{colButtonText}
+							</button>
+								</div>
 					</div>
 				</div>	
 			</div>

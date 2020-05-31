@@ -4,7 +4,7 @@ import "../styles/PadletPostsContainer.css";
 /*Component that creates a container with rows and columns of posts that contain some data from Padlet's message API,
 changes the amount of columns on the fly depending on window width*/
 
-const MAX_POST_WIDTH = 270;
+const MAX_POST_WIDTH = 260;
 
 
 class PadletPostsContainer extends React.PureComponent {
@@ -67,7 +67,7 @@ class PadletPostsContainer extends React.PureComponent {
 
 		return ( <div className="container-fluid">
 					<div className="row justify-content-center">
-						<div className="collapse" id="collapsePosts">
+						<div className="collapse container-fluid" id="collapsePosts">
 						<div className="postListTitle">
 							<h3 className="d-inline messageListTitle">{phrases[0]}</h3>&nbsp;&nbsp;
 							<button className="btn btn-light btn-sm btnGoUp d-inline" 
@@ -92,103 +92,3 @@ class PadletPostsContainer extends React.PureComponent {
 
 
 export default PadletPostsContainer;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
