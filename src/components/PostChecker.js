@@ -56,6 +56,8 @@ class PostChecker extends React.Component {
 		const checkedIds = this.state.checkedIds;
 		const language = this.state.language;
 		const timeout = this.state.timeout;
+		const postsData = this.state.postsData;
+		const showingPostList = this.state.showingPostList;
 
 		let msgsData;
 		//Loading animation, havent gotten the data from padlet yet
@@ -80,10 +82,10 @@ class PostChecker extends React.Component {
 
 		const lastCheck = cookie.load("lastCheck");
 		const buttonText = (timeout) ? getWord(language,7) : getWord(language,8);
-		const clickMeClass = (this.state.timeout) ?  "" : " pressMeButton";
-		const invisButton = (this.state.postsData.length === 0 ) ? " " : "";
-		const showingPostList = this.state.showingPostList;
-		const postsData = this.state.postsData;
+		const clickMeClass = (timeout) ?  "" : " pressMeButton";
+		const invisButton = (postsData.length === 0 ) ? " " : "";
+		//Could make this dynamic on window resize but meh
+		const bigButton = (window.innerHeight > 600) ? " btn-lg" : "";
 		return(
 			<div className="container-fluid">
 			<div className="container text-center" id="topContainer">
@@ -104,11 +106,11 @@ class PostChecker extends React.Component {
 					  	{lastCheck !== undefined && !timeout && <p className="dateSmallFont"><i>{getWord(language,10) +
 					  		new Date(parseInt(lastCheck)).toLocaleString()}</i></p>}
 					  	<div className="" style={{padding: "0"}}>
-					  		<button className={"btn btn-primary btn-block" + clickMeClass} 
+					  		<button className={"btn btn-primary btn-block" + clickMeClass + bigButton} 
 						  		onClick={() => {this.requestAndUpdatePosts()}} 
 								disabled={timeout}><b>{buttonText}</b>
 							</button>
-					  		<button className={"btn btn-success btn-block colListButton" + invisButton} data-toggle="collapse" 
+					  		<button className={"btn btn-success btn-block colListButton" + invisButton + bigButton} data-toggle="collapse" 
 							href="#collapsePosts" aria-expanded="false" aria-controls="collapsePosts" id="collapsePostsButton"
 							onClick={() => {
 									setTimeout( () => {
