@@ -13,6 +13,9 @@ It also shows the message titles, dates and text that you got from the API.
 
 ### Setting it up
 
+It's a standard node project, just install node, download the project files then run npm install on the download directory
+to download and install the node_modules files. Then it uses the standard create react app scripts to run such as npm start.
+
 Needs to set up an .env file with REACT_APP_APIKEY and REACT_APP_PADLETURL.
 
 The api rules are here: https://padlet.readme.io/docs/post-object
