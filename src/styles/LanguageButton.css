@@ -1,8 +1,8 @@
 .languageElements {
-	margin-top:10px;
-	margin-bottom:10px;
-	font-size: 0.8em;
-	padding:5px;
+	margin-top:2px;
+	margin-bottom:2px;
+	font-size: 0.7em;
+	padding:1px;
 }
 
 .mainSelectLanguageElement {
@@ -15,12 +15,10 @@
 	color: #993300; 
 	background-color: transparent;
 	font-weight: bolder;
-	font-size: 1.1em;
+	font-size: 1em;
 }
 
 .mainSelectLanguageElement option {
 	border: 1px solid #000;
-	text-transform: uppercase;
- 	background: blue;
  }
  

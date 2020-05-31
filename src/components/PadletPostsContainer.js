@@ -40,9 +40,9 @@ class PadletPostsContainer extends React.PureComponent {
 		return ( <div className="container-fluid">
 					<div className="row justify-content-center">
 						<div className="collapse container-fluid" id="collapsePosts">
-						<div className="postListTitle">
+						<div className="postListTitle" id="zoomToFirstPost">
 							<h3 className="d-inline messageListTitle">{phrases[0]}</h3>&nbsp;&nbsp;
-							<button className="btn btn-light btn-sm btnGoUp d-inline" 
+							<button className="btn btn-secondary btn-sm btnGoUp d-inline" 
 							onClick={() => {
 									setTimeout( () => {var elmnt = document.getElementById("topContainer");
 									elmnt.scrollIntoView();},100);}}>

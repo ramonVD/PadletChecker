@@ -14,12 +14,11 @@ const words = {			CAT: [
 						"Hi ha nous missatges al meu ",
 						"Última comprovació: ",
 						"Llenguatge: ",
-						"Obre el llistat de missatges actuals",
+						"Llistat de missatges al teu Padlet",
 						"Missatges al teu Padlet",
 						"Nou!",
 						"No s'ha pogut trobar cap missatge!",
-						"Torna a dalt",
-						"Tanca el llistat de missatges actuals"
+						"Torna a dalt"
 						],
 						ESP: [
 						"Comprobando los mensajes del Padlet...", 
@@ -34,12 +33,11 @@ const words = {			CAT: [
 						"Hay nuevos mensajes en mi ",
 						"Última comprobación: ",
 						"Lenguaje: ",
-						"Abre el listado de mensajes actuales",
+						"Listado de mensajes en tu Padlet",
 						"Mensajes en tu Padlet",
 						"Nuevo!",
 						"No se ha podido encontrar ningún mensaje",
-						"Vuelve arriba",
-						"Cierra el listado de mensajes actuales"
+						"Vuelve arriba"
 						],
 						EN: [
 						"Checking Padlets' messages...", 
@@ -50,16 +48,15 @@ const words = {			CAT: [
 						" No change since you last checked",
 						"An error has occurred obtaining the data. Please try again...",
 						"Checking Padlet data...",
-						"Check Padlet's messages again!",
+						"Check Padlets' messages again!",
 						"Are there new messages in my ",
 						"Last check: ",
 						"Language: ",
-						"Open the actual message list",
-						"List of messages in your Padlet",
+						"Your Padlets' message list",
+						"Messages in your Padlet",
 						"New!",
 						"Couldn't find any message",
-						"Go up",
-						"Close the actual message list"
+						"Go up"
 						]
 					};
 

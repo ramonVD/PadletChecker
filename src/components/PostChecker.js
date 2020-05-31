@@ -55,10 +55,11 @@ class PostChecker extends React.Component {
 		const lastAmountChanged = this.state.lastAmountChanged;
 		const checkedIds = this.state.checkedIds;
 		const language = this.state.language;
+		const timeout = this.state.timeout;
 
 		let msgsData;
 		//Loading animation, havent gotten the data from padlet yet
-		if (checkedIds === undefined || this.state.timeout) {
+		if (checkedIds === undefined || timeout) {
 			msgsData = <h4 className="card-title centralText"><div className="loader">{getWord(language,0)}</div></h4>;
 		} else {
 			if (lastAmountChanged[0] === -2) { //error
@@ -74,19 +75,20 @@ class PostChecker extends React.Component {
 			}
 		}
 		if (this.state.error) {
-			msgsData = getWord(language,6);
+			msgsData = <h4 className="card-title centralText">{getWord(language,6)}</h4>;
 		}
 
 		const lastCheck = cookie.load("lastCheck");
-		const buttonText = (this.state.timeout) ? getWord(language,7) : getWord(language,8);
+		const buttonText = (timeout) ? getWord(language,7) : getWord(language,8);
 		const clickMeClass = (this.state.timeout) ?  "" : " pressMeButton";
 		const invisButton = (this.state.postsData.length === 0 ) ? " " : "";
-		const colButtonText = (this.state.showingPostList) ? getWord(language,17) : getWord(language,12);
+		const showingPostList = this.state.showingPostList;
+		const postsData = this.state.postsData;
 		return(
 			<div className="container-fluid">
 			<div className="container text-center" id="topContainer">
 				<div className="row justify-content-end align-items-center">
-						<LanguageButton possibleLanguages={possibleLanguages} selectedLang={this.state.language} 
+						<LanguageButton possibleLanguages={possibleLanguages} selectedLang={language} 
 						changeLanguage={this.changeLanguage} languageName={getWord(language,11)}/>
 				</div>
 				<div className="row justify-content-center">
@@ -96,31 +98,32 @@ class PostChecker extends React.Component {
 					  		rel="noopener noreferrer" target="_blank">Padlet?</a></b></h4>
 
 					 	</div>
-					  	<div className="card-body">
+					  	<div className="card-body minHeightCard align-items-center">
 					    	{msgsData}
 					  	</div>
-					  	{lastCheck !== undefined && !this.state.timeout && <p className="smallFont"><i>{getWord(language,10) +
+					  	{lastCheck !== undefined && !timeout && <p className="dateSmallFont"><i>{getWord(language,10) +
 					  		new Date(parseInt(lastCheck)).toLocaleString()}</i></p>}
 					  	<div className="" style={{padding: "0"}}>
-					  		<button className={"btn btn-primary btn-lg btn-block" + clickMeClass} 
+					  		<button className={"btn btn-primary btn-block" + clickMeClass} 
 						  		onClick={() => {this.requestAndUpdatePosts()}} 
-								disabled={this.state.timeout}><b>{buttonText}</b>
+								disabled={timeout}><b>{buttonText}</b>
 							</button>
-					  		<button className={"btn btn-success btn-lg btn-block colListButton" + invisButton} data-toggle="collapse" 
+					  		<button className={"btn btn-success btn-block colListButton" + invisButton} data-toggle="collapse" 
 							href="#collapsePosts" aria-expanded="false" aria-controls="collapsePosts" id="collapsePostsButton"
-							onClick={() => {setTimeout( () => {
-								if (this.state.showingPostList) {
-									document.getElementById("collapsePosts").scrollIntoView();
-								} 
-								},200);
-								this.setState({showingPostList: !this.state.showingPostList});}}>
-								{colButtonText}
+							onClick={() => {
+									setTimeout( () => {
+										if (!showingPostList) {
+											document.getElementById("zoomToFirstPost").scrollIntoView();
+										} 
+									},200);
+								this.setState({showingPostList: !showingPostList});}} disabled={postsData.length === 0}>
+								{getWord(language,12)}
 							</button>
 								</div>
 					</div>
 				</div>	
 			</div>
-					<PadletPostsContainer postsData={this.state.postsData} phrases={[getWord(language,13),getWord(language,14),
+					<PadletPostsContainer postsData={postsData} phrases={[getWord(language,13),getWord(language,14),
 								getWord(language,15), getWord(language,16)]}  />
 
 			</div>);
