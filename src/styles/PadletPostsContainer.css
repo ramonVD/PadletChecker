@@ -49,6 +49,7 @@
 	padding-left: 5px;
 	padding-right: 5px;
 	max-width: 22rem;
+	min-width: 16rem;
 	margin-bottom:5px;
 	margin-top: 5px;
 }

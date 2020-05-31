@@ -35,6 +35,7 @@ class PostChecker extends React.Component {
 		      lastAmountChanged: [-2,0],
 		      postsData: [],
 		      error: false,
+		      showingPostList:false,
 		      language: startingLang
 		};	
 	   	this.requestAndUpdatePosts = this.requestAndUpdatePosts.bind(this);
@@ -80,13 +81,7 @@ class PostChecker extends React.Component {
 		const buttonText = (this.state.timeout) ? getWord(language,7) : getWord(language,8);
 		const clickMeClass = (this.state.timeout) ?  "" : " pressMeButton";
 		const invisButton = (this.state.postsData.length === 0 ) ? " " : "";
-		let colPostElement = document.getElementById("collapsePosts");
-		let colButtonText;
-		if (colPostElement === null || colPostElement === undefined) {
-			colButtonText = getWord(language,12);
-		} else {
-			colButtonText = (colPostElement.classList.contains("show")) ? getWord(language,17) : getWord(language,12);
-		}
+		const colButtonText = (this.state.showingPostList) ? getWord(language,17) : getWord(language,12);
 		return(
 			<div className="container-fluid">
 			<div className="container text-center" id="topContainer">
@@ -114,14 +109,11 @@ class PostChecker extends React.Component {
 					  		<button className={"btn btn-success btn-lg btn-block colListButton" + invisButton} data-toggle="collapse" 
 							href="#collapsePosts" aria-expanded="false" aria-controls="collapsePosts" id="collapsePostsButton"
 							onClick={() => {setTimeout( () => {
-								var btn = document.getElementById("collapsePostsButton");
-								if (btn.innerText === getWord(language,12)) {
-									colPostElement.scrollIntoView();
-									btn.textContent = getWord(language,17);
-								} else {
-									btn.textContent = getWord(language,12);
-								}
-								},200); }}>
+								if (this.state.showingPostList) {
+									document.getElementById("collapsePosts").scrollIntoView();
+								} 
+								},200);
+								this.setState({showingPostList: !this.state.showingPostList});}}>
 								{colButtonText}
 							</button>
 								</div>
@@ -129,7 +121,7 @@ class PostChecker extends React.Component {
 				</div>	
 			</div>
 					<PadletPostsContainer postsData={this.state.postsData} phrases={[getWord(language,13),getWord(language,14),
-								getWord(language,15), getWord(language,16)]} />
+								getWord(language,15), getWord(language,16)]}  />
 
 			</div>);
 	}
