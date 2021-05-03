@@ -138,20 +138,20 @@ class PostChecker extends React.Component {
 
 		/*Couldnt get this to work without a cors proxy (allow origin missing from head apparently), but I've seen
 		someone using py.requests and it working fine so maybe I'm doing something wrong*/
-		const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+		const proxyUrl = process.env.REACT_APP_APIURL;
 
-		const targetUrl = 'https://padlet.com/api/0.9/public_posts?padlet_url='+process.env.REACT_APP_PADLETURL;
+		const targetUrl = process.env.REACT_APP_PADLETUSER + "/" + process.env.REACT_APP_PADLETID;
 
 		const timeBeforeCheck = Date.now();
 		fetch(proxyUrl+targetUrl, {
 			mode: 'cors',
 			headers: {
-	    		"App-Id": process.env.REACT_APP_APIKEY,
 	    		"Content-Type": "application/json",
 	    		Accept: "*/*"
 	  			}
 		    })
 	    .then((res) => {
+	    	console.log(res)
 	    	return res.json();})
 	    .then( (msgsData) => {
 	    	let newIdArray = [];
